@@ -1,0 +1,18 @@
+ERROR - 2023-11-06 20:54:43 --> Table 'dbpena.sampah' doesn't exist
+CRITICAL - 2023-11-06 20:54:43 --> Call to a member function getResult() on bool
+#0 C:\xampp\htdocs\pena\app\Controllers\Home.php(404): App\Models\M_model->filter2('', '')
+#1 C:\xampp\htdocs\pena\system\CodeIgniter.php(832): App\Controllers\Home->cari_b()
+#2 C:\xampp\htdocs\pena\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#3 C:\xampp\htdocs\pena\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\pena\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\pena\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
+ERROR - 2023-11-06 21:41:01 --> Table 'dbpena.barang_masuk' doesn't exist
+CRITICAL - 2023-11-06 21:41:01 --> Call to a member function getResult() on bool
+#0 C:\xampp\htdocs\pena\app\Controllers\Home.php(401): App\Models\M_model->tampil('barang_masuk')
+#1 C:\xampp\htdocs\pena\system\CodeIgniter.php(832): App\Controllers\Home->barang_masuk()
+#2 C:\xampp\htdocs\pena\system\CodeIgniter.php(419): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Home))
+#3 C:\xampp\htdocs\pena\system\CodeIgniter.php(326): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#4 C:\xampp\htdocs\pena\public\index.php(37): CodeIgniter\CodeIgniter->run()
+#5 C:\xampp\htdocs\pena\system\Commands\Server\rewrite.php(43): require_once('C:\\xampp\\htdocs...')
+#6 {main}
