@@ -58,6 +58,171 @@ public function aksi_login()
     }
 }
 
+public function penguna()
+    {
+        if(session()->get('id')>0) {
+            $model=new M_model();
+            $on='penguna.user=user.id_user';
+            $diva['okta'] = $model->join2('penguna', 'user',$on);
+            $data['status']=$model->getWhere('user',array('id_user'=>session()->get('id')));
+            echo view('header',$data);
+            echo view('menu');
+            echo view('penguna',$diva);
+            echo view('footer');
+        }else{
+            return redirect()->to('/Home');
+    }   
+}
+
+public function hapus_penguna($id)
+{
+    $model = new M_model(); // Change 'm_model' to 'M_model'
+    $where = array('user' => $id);
+    $where2 = array('id_user' => $id);
+    $model->hapus('penguna', $where);
+    $model->hapus('user', $where2);
+
+    $data2 = array(
+        'id_user' => session()->get('id'),
+        'aktiviti' =>"Menghapus Penguna dengan Id ".$id."",
+        'waktu' => date('Y-m-d H:i:s')
+       
+    );
+     $model->simpan('log', $data2);
+
+    return redirect()->to('/Home/penguna');
+
+
+}
+
+public function tambah_penguna()
+    {
+        
+        $model=new m_model();
+                
+        $diva['okta'] = $model->tampil('level');
+        echo view('tambah_penguna', $diva);
+     
+       
+    
+    }
+
+    public function aksi_tambah_penguna()
+{
+    $a = $this->request->getPost('username');
+    $f = $this->request->getPost('password');
+    $level = $this->request->getPost('level');
+    $nama = $this->request->getPost('nama');
+    $ttl = $this->request->getPost('ttl');
+    $jk = $this->request->getPost('jk');
+    $alamat = $this->request->getPost('alamat');
+    $nohp = $this->request->getPost('nohp');
+    //  $foto= $this->request->getFile('foto');
+    //     if($foto->isValid() && ! $foto->hasMoved())
+    //     {
+    //         $imageName = $foto->getName();
+    //         $foto->move('images/',$imageName);
+    //     }
+
+    $data1 = array(
+        'username' => $a,
+        'password' => md5($f),
+        'level' => '4',
+        // 'foto' => $imageName
+    );
+
+    $darrel = new M_model();
+    $darrel->simpan('user', $data1);
+
+    $where = array('username' => $a);
+    $ayu = $darrel->getWhere2('user', $where);
+    $id = $ayu['id_user'];
+
+    $data2 = array(
+        'nama' => $nama,
+        'ttl' => $ttl,
+        'jk' => $jk,
+        'alamat' => $alamat,
+        'nohp' => $nohp,
+        'user' => $id
+    );
+
+    $darrel->simpan('penguna', $data2);
+    
+
+    $data2 = array(
+        'id_user' => session()->get('id'),
+        'aktiviti' =>"Menambah Penguna ".$a."",
+        'waktu' => date('Y-m-d H:i:s')
+       
+    );
+     $darrel->simpan('log', $data2);
+
+
+    return redirect()->to('/Home/penguna');
+}
+
+public function edit_penguna($user)
+    {
+        if(session()->get('id')>0){
+        $model=new M_model();
+
+        $where=array('user'=>$user);
+        $where2=array('id_user'=>$user);
+        $data['jess']=$model->tampil('level');
+        $data['jojo']=$model->getWhere('penguna',$where);
+        $data['rizkan']=$model->getWhere('user',$where2);
+        echo view('header');
+        echo view('menu');
+        echo view('edit_penguna',$data);
+        echo view('footer');
+        }else{
+            return redirect()->to('/Home/penguna');
+
+        }
+    }
+    public function aksi_edit_penguna()
+    {
+        $a= $this->request->getPost('username');
+        $b= $this->request->getPost('password');
+        $level= $this->request->getPost('level');
+        $nama= $this->request->getPost('nama');
+        $ttl= $this->request->getPost('ttl');
+        $jk= $this->request->getPost('jk');
+        $alamat= $this->request->getPost('alamat');
+        $nohp= $this->request->getPost('nohp');
+        $id= $this->request->getPost('id');
+        $id2= $this->request->getPost('id2');
+
+
+        $where=array('id_user'=>$id);
+        $data1=array(
+            'username'=>$a,
+            'password'=>$b,
+            'level'=>$level,
+             'created_at'=>date('Y-m-d-H:i:s')
+            
+        );
+        $darrel=new M_model();
+        $darrel->qedit('user', $data1, $where);
+        
+        $where2=array('user'=>$id2);
+        $data2=array(
+            'nama'=>$nama,
+            'ttl'=>$ttl,
+            'jk'=>$jk,
+            'alamat'=>$alamat,
+            'nohp'=>$nohp,
+             'created_at'=>date('Y-m-d-H:i:s')
+        );
+        $model=new M_model();
+   
+        $darrel->qedit('penguna', $data2,$where2);
+
+        return redirect()->to('/Home/penguna');
+
+    }
+
     public function reset_password($id)
     {
         if(session()->get('id')>0) {

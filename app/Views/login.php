@@ -50,7 +50,7 @@
                    
                   </form>
 
-                  
+                  <a class="collapse-item" href="/home/tambah_penguna">Daftar Akun</a>
                   <!-- <hr> -->
                   
                   <div class="text-center">
